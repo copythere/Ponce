@@ -2,6 +2,15 @@
   <img src="https://cloud.githubusercontent.com/assets/5193128/18534105/f27da220-7a9c-11e6-8d2e-a940d94b404b.png">
 </p>
 
+<div align="center">
+  <h1><strong>ONLY SUPPORT IDA PRO 9.1</strong></h1>
+  <h1><strong>只支持 IDA PRO 9.1</strong></h1>
+  <h1><strong>SEULEMENT PRISE EN CHARGE IDA PRO 9.1</strong></h1>
+  <h1><strong>IDA PRO 9.1 のみサポート</strong></h1>
+  <h1><strong>NUR UNTERSTÜTZUNG FÜR IDA PRO 9.1</strong></h1>
+  <h1><strong>ТОЛЬКО ПОДДЕРЖКА IDA PRO 9.1</strong></h1>
+  <h1><strong>IDA PRO 9.1 만 지원</strong></h1>
+</div>
 
 # Ponce
 
