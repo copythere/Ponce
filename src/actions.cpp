@@ -600,6 +600,10 @@ struct ah_action_chooser_add_constrain_t : public action_handler_t
 {
     virtual int idaapi activate(action_activation_ctx_t* ctx)
     {
+        if (ponce_table_chooser == nullptr ||
+            ctx->widget != find_widget(ponce_table_chooser->title))
+            return 0;
+
         int upper_limit_int, lower_limit_int;
         bool upper_set = false, lower_set = false;
         int res = ask_constrain(ctx->chooser_selection, &upper_limit_int, &lower_limit_int);
@@ -651,7 +655,8 @@ struct ah_action_chooser_add_constrain_t : public action_handler_t
     {
         update_action_label(ctx->action, "Set constraint to symbolic variable");
 
-        if (!ponce_table_chooser || 
+        if (!ponce_table_chooser ||
+            ctx->widget != find_widget(ponce_table_chooser->title) ||
             ctx->chooser_selection.empty() ||
             cmdOptions.use_tainting_engine)
             return AST_DISABLE;
@@ -686,6 +691,10 @@ struct ah_action_chooser_comment_t : public action_handler_t
 {
     virtual int idaapi activate(action_activation_ctx_t* ctx)
     {
+        if (ponce_table_chooser == nullptr ||
+            ctx->widget != find_widget(ponce_table_chooser->title))
+            return 0;
+
         qstring response;
         if (ask_str(&response, 3, "New comment")) {
             for (const auto& index : ctx->chooser_selection) {
@@ -705,6 +714,7 @@ struct ah_action_chooser_comment_t : public action_handler_t
         update_action_label(ctx->action, "Set comment to symbolic variable");
 
         if (!ponce_table_chooser ||
+            ctx->widget != find_widget(ponce_table_chooser->title) ||
             ctx->chooser_selection.empty() ||
             cmdOptions.use_tainting_engine)
             return AST_DISABLE;
