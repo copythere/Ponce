@@ -2,11 +2,6 @@
   <img src="https://cloud.githubusercontent.com/assets/5193128/18534105/f27da220-7a9c-11e6-8d2e-a940d94b404b.png">
 </p>
 
-<p align="center">
-  <a href="https://github.com/illera88/Ponce/actions?query=workflow%3A%22Build+for+Windows%22"><img alt="Build for Windows" src="https://github.com/illera88/Ponce/workflows/Build%20for%20Windows/badge.svg"></a>
-  <a href="https://github.com/illera88/Ponce/actions?query=workflow%3A%22Build+for+OSX%22"><img alt="Build for OSX" src="https://github.com/illera88/Ponce/workflows/Build%20for%20OSX/badge.svg"></a>
-  <a href="https://github.com/illera88/Ponce/actions?query=workflow%3A%22Build+for+Linux%22"><img alt="Build for Linux" src="https://github.com/illera88/Ponce/workflows/Build%20for%20Linux/badge.svg"></a>
-</p>
 
 # Ponce
 
@@ -20,7 +15,7 @@ We addressed these needs by creating Ponce, an IDA plugin that implements symbol
 
 ### Installation
 
-Ponce works with both x86 and x64 binaries in any IDA version &gt;= 7.0. Installing the plugin is as simple as copying the appropiate files from the [latest builds](https://github.com/illera88/Ponce/releases/latest) to the `plugins\` folder in your IDA installation directory.
+Ponce works with the unified 64‑bit IDA (version 9.1 or newer) which supports analyzing both 32‑bit and 64‑bit binaries. Installing the plugin is as simple as copying the appropriate files from the [latest builds](https://github.com/illera88/Ponce/releases/latest) to the `plugins/` folder in your IDA installation directory.
 
 Make sure you use the Ponce binary compiled for your IDA version to avoid any incompatibilities.
 
@@ -138,7 +133,7 @@ Ponce relies on the [Triton framework](https://github.com/JonathanSalwan/Triton)
 
 ### Building
 
-Since Ponce v0.3 we have moved the building compilation process to use `CMake`. Doing this we unify the way that configuration and building happens for Linux, Windows and OSX. We now support providing feedback on the pseudocode about symbolic or taint instructions. For this feature to work you need to add `hexrays.hpp` to your IDA SDK include folder. `hexrays.hpp` can be found on `plugins/hexrays_sdk/` on your IDA installation path. If you have not purchased the hex-rays decompiler you can still build Pnce by using `-DBUILD_HEXRAYS_SUPPORT=OFF`. We use Github actions as our CI environment. Check the [action files](https://github.com/illera88/Ponce/tree/master/.github/workflows) if you want to understand how the building process happens.
+Since Ponce v0.3 we have moved the building compilation process to use `CMake`. Doing this we unify the way that configuration and building happens for Linux, Windows and OSX. We now support providing feedback on the pseudocode about symbolic or taint instructions. For this feature to work you need to add `hexrays.hpp` to your IDA SDK include folder. `hexrays.hpp` can be found on `plugins/hexrays_sdk/` on your IDA installation path. If you have not purchased the hex-rays decompiler you can still build Pnce by using `-DBUILD_HEXRAYS_SUPPORT=OFF`.
 
 ### FAQ
 

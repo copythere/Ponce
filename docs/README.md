@@ -31,7 +31,7 @@ The plugin will automatically run, guiding you through the initial configuration
 
 ### Installation
 
-Ponce works with both x86 and x64 binaries in any IDA version &gt;= 7.0 for Windows, Linux and MacOs. Installing the plugin is as simple as copying the appropiate files from the [latest builds](https://github.com/illera88/Ponce/tree/master/latest_builds) to the `plugins\` folder in your IDA installation directory.
+Ponce works with the unified 64-bit IDA (version 9.1 or newer) and can analyze both 32-bit and 64-bit binaries. Installing the plugin is as simple as copying the appropriate files from the [latest builds](https://github.com/illera88/Ponce/tree/master/latest_builds) to the `plugins/` folder in your IDA installation directory.
 
 Make sure you use the Ponce binary compiled for your IDA version to avoid any incompatibilities.
 
