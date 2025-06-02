@@ -36,7 +36,7 @@ add_library(${PROJECT_NAME}64 SHARED ${PONCE_SOURCE_FILES} ${PONCE_HEADER_FILES}
 #                       # 
 
 # Look for IDA SDK 
-set(IDASDK_ROOT_DIR "" CACHE PATH "Path to directory idasdk7X where you extracted idasdk7X.zip")
+set(IDASDK_ROOT_DIR "" CACHE PATH "Path to directory idasdk91 where you extracted idasdk91.zip")
 
 if(NOT IDASDK_ROOT_DIR)
 	message(FATAL_ERROR "You should set IDASDK_ROOT_DIR to the IDA SDK path")
