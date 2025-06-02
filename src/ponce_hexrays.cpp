@@ -19,7 +19,6 @@ bool hexrays_present = false;
 /* Returns the pseudocode line corresponding to an address or -1 if fail*/
 int get_compile_coord_by_ea(cfunc_t* cfunc, ea_t addr) {
     int y = -1;
-#if IDA_SDK_VERSION >= 720
     if (citem_t* item = cfunc->body.find_closest_addr(addr)) {
         if (cfunc->find_item_coords(item, nullptr, &y)) {
             //found
@@ -27,36 +26,11 @@ int get_compile_coord_by_ea(cfunc_t* cfunc, ea_t addr) {
         else
             y = -1;
     }
-#else
-    std::map<ea_t, int> lnmap;
-    int i = 0;
-    y = -1;
-
-    for (const auto& line : cfunc->get_pseudocode()) {
-        auto pitem = ctree_item_t();
-        auto ret = cfunc->get_line_item(line.line.c_str(), 0, true, nullptr, &pitem, nullptr);
-        if (ret && pitem.it) {
-            lnmap[pitem.it->ea] = i;
-        }
-        i++;
-    }
-    ea_t closest_ea = BADADDR;
-    for (const auto& [ea, line] : lnmap) {
-        if (closest_ea == BADADDR || abs(int(closest_ea - addr)) > abs(int(ea - addr))) {
-            closest_ea = ea;
-            y = lnmap[ea];
-        }
-    }
-#endif
     return y;
 
 }
 
-#if IDA_SDK_VERSION == 700
-int idaapi ponce_hexrays_callback(void*, hexrays_event_t event, va_list va)
-#else
 ssize_t idaapi ponce_hexrays_callback(void*, hexrays_event_t event, va_list va)
-#endif
 {
     int y = -1;
     
@@ -66,11 +40,7 @@ ssize_t idaapi ponce_hexrays_callback(void*, hexrays_event_t event, va_list va)
     {
         cfunc_t* cfunc = va_arg(va, cfunc_t*);
         ctree_maturity_t mat = va_argi(va, ctree_maturity_t);
-#if IDA_SDK_VERSION == 700
-        func_t* func = get_func(cfunc->entry_ea);
-#else
         func_t* func = cfunc->mba->get_curfunc();
-#endif
         std::list<int> already_commented_lines;
         for (const auto& [address, insinfo] : ponce_comments) {
             if (func_contains(func, address)) {
