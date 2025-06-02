@@ -30,15 +30,6 @@
 
 #ifdef BUILD_HEXRAYS_SUPPORT
 #include "ponce_hexrays.hpp"
-
-#if IDA_SDK_VERSION < 760
-// Hex-Rays API pointer
-hexdsp_t* hexdsp = NULL;
-#endif
-#endif
-
-#if IDA_SDK_VERSION < 700
-#error "Ponce does not support IDA < 7.0"
 #endif
 
 #define stringify_literal( x ) # x
@@ -127,13 +118,7 @@ bool idaapi run(size_t)
 }
 
 //--------------------------------------------------------------------------
-#if IDA_SDK_VERSION >= 760
 plugmod_t* idaapi init(void)
-#elif IDA_SDK_VERSION == 750
-size_t idaapi init(void)
-#else
-int idaapi init(void)
-#endif
 {
     char runtimeVersion[8];
     //We do some checks with the versions...

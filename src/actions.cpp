@@ -77,11 +77,9 @@ struct ah_taint_symbolize_register_t : public action_handler_t
             uint32 flags;
             get_highlight(&selected, get_current_viewer(), &flags);
         }
-#if IDA_SDK_VERSION >= 740
         else if (ctx->widget_type == BWN_CPUREGS) {
             selected = ctx->regname;
         }
-#endif
 
         taint_symbolize_register(selected, ctx);
 
@@ -107,7 +105,6 @@ struct ah_taint_symbolize_register_t : public action_handler_t
                 }
             }                
         }
-#if IDA_SDK_VERSION >= 740
         else if (action_update_ctx->widget_type == BWN_CPUREGS) {
             auto reg_name = action_update_ctx->regname;
             if (str_to_register(reg_name) != triton::arch::register_e::ID_REG_INVALID) {
@@ -115,7 +112,6 @@ struct ah_taint_symbolize_register_t : public action_handler_t
                 action_to_take = is_debugger_on() ? AST_ENABLE : AST_DISABLE;
             }
         }
-#endif
         success = update_action_label(action_IDA_taint_symbolize_register.name, label);
         success = update_action_tooltip(action_IDA_taint_symbolize_register.name, cmdOptions.use_tainting_engine ? COMMENT_TAINT_REG : COMMENT_SYMB_REG);
 
@@ -168,13 +164,11 @@ struct ah_taint_symbolize_memory_t : public action_handler_t
                     current_ea = get_screen_ea() != -1 ? get_screen_ea() : 0;
             }                
         }
-#if IDA_SDK_VERSION >= 730
         else if (ctx->widget_type == BWN_STKVIEW) {
             if(is_mapped(ctx->cur_value))
                 current_ea = ctx->cur_value;
         }
-#endif
-        else if (ctx->widget_type == BWN_DUMP) {
+        else if (ctx->widget_type == BWN_HEXVIEW) {
             if (ctx->cur_flags & ACF_HAS_SELECTION){ // Only if there has been a valid selection
                 //We get the selection bounds from the action activation context
                 auto selection_starts = ctx->cur_sel.from.at->toea();
@@ -184,14 +178,12 @@ struct ah_taint_symbolize_memory_t : public action_handler_t
             }
         }
        
-#if IDA_SDK_VERSION >= 740
         else if (ctx->widget_type == BWN_CPUREGS) {
             auto reg_name = ctx->regname;
             uint64 reg_value;
             get_reg_val(reg_name, &reg_value);
             current_ea = reg_value;
         }
-#endif
         auto success = jumpto(current_ea, -1, UIJMP_IDAVIEW);
 
         if (!prompt_window_taint_symbolize(current_ea, abs(size), &selection_starts, &selection_ends))
@@ -253,10 +245,9 @@ struct ah_taint_symbolize_memory_t : public action_handler_t
             }
             action_to_take = is_debugger_on() ? AST_ENABLE : AST_DISABLE;
         }
-        else if (action_update_ctx_t->widget_type == BWN_DUMP) {
+        else if (action_update_ctx_t->widget_type == BWN_HEXVIEW) {
             action_to_take = is_debugger_on() ? AST_ENABLE : AST_DISABLE;    
         }
-#if IDA_SDK_VERSION >= 730
         else if (action_update_ctx_t->widget_type == BWN_STKVIEW) {
             if (is_mapped(action_update_ctx_t->cur_value)) {
                 qsnprintf(label, sizeof(label), "%s memory at " MEM_FORMAT, cmdOptions.use_tainting_engine ? "Taint" : "Symbolize", action_update_ctx_t->cur_value);
@@ -265,8 +256,7 @@ struct ah_taint_symbolize_memory_t : public action_handler_t
             else
                 action_to_take = AST_DISABLE;
         }
-#endif
-#if IDA_SDK_VERSION >= 740
+
         else if (action_update_ctx_t->widget_type == BWN_CPUREGS) {
             auto reg_name = action_update_ctx_t->regname;
             uint64 reg_value;  
@@ -280,7 +270,6 @@ struct ah_taint_symbolize_memory_t : public action_handler_t
                 action_to_take = is_debugger_on() ? AST_ENABLE : AST_DISABLE;
             }
         }
-#endif
         else {
             return AST_DISABLE;
         }

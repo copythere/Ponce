@@ -154,20 +154,20 @@ int tritonize(ea_t pc, thid_t threadID)
 }
 
 bool ponce_set_triton_architecture() {
-    if (ph.id == PLFM_386) {
-        if (ph.use64())
+    if (PH.id == PLFM_386) {
+        if (PH.use64())
             tritonCtx.setArchitecture(triton::arch::ARCH_X86_64);
-        else if (ph.use32())
+        else if (PH.use32())
             tritonCtx.setArchitecture(triton::arch::ARCH_X86);
         else {
             msg("[e] Wrong architecture\n");
             return false;
         }
     }
-    else if (ph.id == PLFM_ARM) {
-        if (ph.use64())
+    else if (PH.id == PLFM_ARM) {
+        if (PH.use64())
             tritonCtx.setArchitecture(triton::arch::ARCH_AARCH64);
-        else if (ph.use32())
+        else if (PH.use32())
             tritonCtx.setArchitecture(triton::arch::ARCH_ARM32);
         else {
             msg("[e] Wrong architecture\n");
