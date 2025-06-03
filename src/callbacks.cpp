@@ -214,14 +214,14 @@ bool attach_action_solve(triton::uint64 dstAddr, unsigned int path_constraint_in
     char label[256];
     char tooltip[256];
     char name[256];
-    char popup_name[] = "SMT Solver/Solve formula (Multiple hits)/";
+    char popup_name[] = "[Ponce] SMT Solver/Solve formula (Multiple hits)/";
 
     if (mode == 0) {
         action = action_IDA_solve_formula_sub;       
         qsnprintf(label, sizeof(label), "Solve formula to take " MEM_FORMAT, dstAddr);
         //We need the path constraint index during the action activate
         qsnprintf(tooltip, 255, "%s. Index: %u", action_IDA_solve_formula_sub.tooltip, path_constraint_index);
-        qsnprintf(popup_name, sizeof(popup_name), "SMT Solver/Solve formula");
+        qsnprintf(popup_name, sizeof(popup_name), "[Ponce] SMT Solver/Solve formula");
 
         action.name = "Ponce:solve_formula_one_branch";
         action.label = label;
@@ -287,7 +287,7 @@ ssize_t idaapi ui_callback(void* ud, int notification_code, va_list va)
             if (action_list[i].action_decs == NULL)
                 break;
 
-            if (cmdOptions.use_tainting_engine && strcmp(action_list[i].menu_path, "SMT Solver/") == 0) {
+            if (cmdOptions.use_tainting_engine && strcmp(action_list[i].menu_path, "[Ponce] SMT Solver/") == 0) {
                 /* Do not populate SMT Solver options if we use the tainting engine*/
                 continue;
             }
@@ -327,7 +327,7 @@ ssize_t idaapi ui_callback(void* ud, int notification_code, va_list va)
 
             if (non_taken_branches_n == 0) {
                 // Disabled menu (so the user knows it's an option in some cases), already registered, we just need to attach it to the popup
-                attach_action_to_popup(form, popup_handle, action_IDA_solve_formula_sub.name, "SMT Solver/Solve formula", SETMENU_INS);
+                attach_action_to_popup(form, popup_handle, action_IDA_solve_formula_sub.name, "[Ponce] SMT Solver/Solve formula", SETMENU_INS);
             }
             else if (non_taken_branches_n == 1) {
                 // There is only one non taken branch, no need to add submenus

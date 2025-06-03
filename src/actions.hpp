@@ -12,7 +12,7 @@
 
 #define __END__ -1
 
-/* IDA SDK >= 7.4 only */
+/* IDA SDK >= 9.1 only */
 const int ponce_banner_views[] = { BWN_DISASM, BWN_CPUREGS, BWN_HEXVIEW, BWN_STKVIEW, BWN_CHOOSER, __END__ };
 const int ponce_taint_symbolize_mem_views[] = { BWN_DISASM, BWN_CPUREGS, BWN_HEXVIEW, BWN_STKVIEW, __END__ };
 const int ponce_taint_symbolize_reg_views[] = { BWN_DISASM, BWN_CPUREGS, BWN_HEXVIEW, BWN_STKVIEW, __END__ };
@@ -38,10 +38,10 @@ extern action_desc_t action_IDA_ponce_banner;
 extern action_desc_t action_IDA_solve_formula_choose_index_sub;
 
 
-#define SYMBOLIC "Symbolic/"
+#define SYMBOLIC "[Ponce] Symbolic/"
 #define symbolize_REG "Symbolize Register"
 #define symbolize_MEM "Symbolize Memory"
-#define TAINT "Taint/"
+#define TAINT "[Ponce] Taint/"
 #define TAINT_REG "Taint Register"
 #define TAINT_MEM "Taint Memory"
 #define COMMENT_TAINT_REG "Make the selected register tainted"
