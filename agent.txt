@@ -1,0 +1,5 @@
+# Ponce 项目
+
+## 唯一可用的测试构建命令：“cmake --build ./build --target Ponce64 --config Release”
+
+## 语言：简体中文
