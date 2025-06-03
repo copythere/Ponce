@@ -189,10 +189,19 @@ struct ah_taint_symbolize_memory_t : public action_handler_t
         if (!prompt_window_taint_symbolize(current_ea, abs(size), &selection_starts, &selection_ends))
             return 0;
 
+        // DEBUG: Print actual values for debugging symbolize memory issue
+        auto selection_length = selection_ends - selection_starts;
+        /*
+        msg("[DEBUG] Symbolize memory debug info:\n");
+        msg("[DEBUG]   selection_starts = " MEM_FORMAT "\n", selection_starts);
+        msg("[DEBUG]   selection_ends = " MEM_FORMAT "\n", selection_ends);
+        msg("[DEBUG]   selection_length = %d (0x%x)\n", (int)selection_length, (int)selection_length);
+        msg("[DEBUG]   original size input = %d (0x%x)\n", (int)abs(size), (int)abs(size));
+        // END DEBUG
+        */
         /* When the user taints something for the first time we should enable step_tracing*/
         start_tainting_or_symbolic_analysis();
 
-        auto selection_length = selection_ends - selection_starts;
         msg("[+] %s memory from " MEM_FORMAT " to " MEM_FORMAT ". Total: %d bytes\n", cmdOptions.use_tainting_engine ? "Tainting" : "Symbolizing",  selection_starts, selection_ends, (int)selection_length);
 
         // Before symbolizing the memory we should set its concrete value
@@ -354,7 +363,7 @@ static ah_negate_and_inject_t ah_negate_and_inject;
 
 action_desc_t action_IDA_negate_and_inject = ACTION_DESC_LITERAL(
     "Ponce:negate_and_inject", // The action name. This acts like an ID and must be unique
-    "Negate & Inject", //The action text.
+    "[Ponce] Negate & Inject", //The action text.
     &ah_negate_and_inject, //The action handler.
     "", //Optional: the action shortcut
     "Negate the current condition and inject the solution into memory", //Optional: the action tooltip (available in menus/toolbar)
@@ -837,11 +846,11 @@ struct ah_enable_disable_tracing_t : public action_handler_t
         if (is_debugger_on()) {
             //We are using this event to change the text of the action
             if (ponce_runtime_status.runtimeTrigger.getState()) {
-                update_action_label(ctx->action, "Disable ponce tracing");
+                update_action_label(ctx->action, "[Ponce] Disable ponce tracing");
                 update_action_icon(ctx->action, 62);
             }
             else {
-                update_action_label(ctx->action, "Enable ponce tracing");
+                update_action_label(ctx->action, "[Ponce] Enable ponce tracing");
                 update_action_icon(ctx->action, 61);
             }
             return AST_ENABLE;
@@ -854,7 +863,7 @@ static ah_enable_disable_tracing_t ah_enable_disable_tracing;
 //We need to define this struct before the action handler because we are using it inside the handler
 action_desc_t action_IDA_enable_disable_tracing = ACTION_DESC_LITERAL(
     "Ponce:enable_disable_tracing",
-    "Enable ponce tracing", //The action text.
+    "[Ponce] Enable ponce tracing", //The action text.
     &ah_enable_disable_tracing, //The action handler.
     "Ctrl+Shift+E", //Optional: the action shortcut
     "Enable or Disable the ponce tracing", //Optional: the action tooltip (available in menus/toolbar)
@@ -999,7 +1008,7 @@ static ah_run_until_symbolic_t ah_run_until_symbolic;
 //We need to define this struct before the action handler because we are using it inside the handler
 action_desc_t action_IDA_run_until_symbolic = ACTION_DESC_LITERAL(
     "Ponce:run_until_symbolic_branch",
-    "Run until symbolic condition", //The action text.
+    "[Ponce] Run until symbolic condition", //The action text.
     &ah_run_until_symbolic, //The action handler.
     "Ctrl+Shift+F9", //Optional: the action shortcut
     "Continue running and stop on next symbolic condition", //Optional: the action tooltip (available in menus/toolbar)
@@ -1015,18 +1024,18 @@ struct IDA_actions action_list[] =
 
     { &action_IDA_run_until_symbolic, { BWN_DISASM, __END__ }, "" },
 
-    { &action_IDA_taint_symbolize_register, {0}, "Symbolic or taint/"},
-    { &action_IDA_taint_symbolize_memory, {0}, "Symbolic or taint/" },
+    { &action_IDA_taint_symbolize_register, {0}, "[Ponce] Symbolic or taint/"},
+    { &action_IDA_taint_symbolize_memory, {0}, "[Ponce] Symbolic or taint/" },
 
-    { &action_IDA_negate_and_inject, { BWN_DISASM, __END__ }, "SMT Solver/" },
-    { &action_IDA_negate_inject_and_restore, { BWN_DISASM, __END__ }, "SMT Solver/" },
+    { &action_IDA_negate_and_inject, { BWN_DISASM, __END__ }, "[Ponce] SMT Solver/" },
+    { &action_IDA_negate_inject_and_restore, { BWN_DISASM, __END__ }, "[Ponce] SMT Solver/" },
     // Solve formula is handled separatly to be more user friendly
     // But still we want to register it in advance so it is always disable, so we define no views
-    { &action_IDA_solve_formula_sub, { __END__ }, "SMT Solver/" },
+    { &action_IDA_solve_formula_sub, { __END__ }, "[Ponce] SMT Solver/" },
 
-    { &action_IDA_createSnapshot, { BWN_DISASM, __END__ }, "Snapshot/"},
-    { &action_IDA_restoreSnapshot, { BWN_DISASM, __END__ }, "Snapshot/" },
-    { &action_IDA_deleteSnapshot, { BWN_DISASM, __END__ }, "Snapshot/" },
+    { &action_IDA_createSnapshot, { BWN_DISASM, __END__ }, "[Ponce] Snapshot/"},
+    { &action_IDA_restoreSnapshot, { BWN_DISASM, __END__ }, "[Ponce] Snapshot/" },
+    { &action_IDA_deleteSnapshot, { BWN_DISASM, __END__ }, "[Ponce] Snapshot/" },
 
     { &action_chooser_comment, { BWN_CHOOSER, __END__ }, "" },
     { &action_chooser_add_constrain, { BWN_CHOOSER, __END__ }, "" },

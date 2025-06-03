@@ -161,6 +161,19 @@ void idaapi term(void)
     snapshot.resetEngine();
     // We want to delete Ponce comments and colours before terminating
     delete_ponce_comments();
+
+    // Fix Memory Leak: blacklkistedUserFunctions
+    if (blacklkistedUserFunctions) {
+        delete blacklkistedUserFunctions;
+        blacklkistedUserFunctions = nullptr;
+    }
+
+    // Fix Memory Leak: ponce_table_chooser
+    if (ponce_table_chooser) {
+        delete ponce_table_chooser;
+        ponce_table_chooser = nullptr;
+    }
+
 #ifdef BUILD_HEXRAYS_SUPPORT
     if(hexrays_present) {
         remove_hexrays_callback(ponce_hexrays_callback, NULL);

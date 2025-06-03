@@ -20,6 +20,6 @@ static const char formTaintSymbolizeInput[] =
 "Symbolize/Taint memory range\n\n"
 "%/"
 "<#The memory address in hex#Address\t:M1:16:16>\n"
-"<#The size#Size   \t:D2:16:16>\n"
+"<#The size#Size    \t:D2:16:16>\n"
 "\n"
 ;
